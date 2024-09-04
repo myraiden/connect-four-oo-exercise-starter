@@ -1,3 +1,14 @@
+/* buttons to run game */
+#startButton{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+#resetButton{
+
+}
+
 /* game board table */
 
 #board td {
@@ -31,4 +42,9 @@
 
 #column-top td:hover {
   background-color: gold;
+}
+
+/* disable column-top when the game ends */
+.gameEnded{
+  pointer-events: none;
 }

@@ -1,3 +1,27 @@
+let gameDOM=document.getElementById("game");
+//add a DIV before id='board' with id='buttons' when DOM loads
+document.addEventListener("DOMContentLoaded",function(){
+  addNewElements();
+  document.getElementById('startButton').addEventListener('click',function(startEvent){document.getElementById('board').innerHTML='';new Game(6, 7);})
+})
+
+//one button starts the game, one resets the game
+function addNewElements(){
+  const startButton=document.createElement("button")
+  const buttonDiv=document.createElement("div")
+
+  buttonDiv.id='buttons'
+  Object.assign(startButton,{
+    innerHTML:'NEW Game',
+    id:'startButton'})
+
+
+  buttonDiv.append(startButton)
+  gameDOM.prepend(buttonDiv)
+}
+
+
+
 class Game{
   /** Connect Four
    *
@@ -13,6 +37,8 @@ class Game{
     this.makeBoard();
     this.makeHtmlBoard();
   }
+
+  //add functionality for the buttons
 
   
   //let currPlayer = 1; // active player: 1 or 2
@@ -84,8 +110,10 @@ class Game{
   }
 
   /** endGame: announce game end */
+  /* AND change the class of the column to prevent users from adding more pieces */
 
   endGame(msg) {
+    document.getElementById('column-top').setAttribute('class','gameEnded');
     alert(msg);
   }
 
@@ -159,4 +187,4 @@ class Game{
 }
 //end GAME class
 
-let newGame=new Game(6, 7);
+//let newGame=new Game(6, 7);
