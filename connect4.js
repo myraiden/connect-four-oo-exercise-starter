@@ -1,4 +1,5 @@
 let gameDOM=document.getElementById("game");
+
 //add a DIV before id='board' with id='buttons' when DOM loads
 document.addEventListener("DOMContentLoaded",function(){
   addNewElements();
@@ -10,17 +11,65 @@ function addNewElements(){
   const startButton=document.createElement("button")
   const buttonDiv=document.createElement("div")
 
+  const p1Color=document.createElement("input")
+  const p1Label=document.createElement("label")
+  const p2Color=document.createElement("input")
+  const p2Label=document.createElement("label")
+  const p1Div=document.createElement("div")
+  const p2Div=document.createElement("div")
+  const playerDiv=document.createElement("div")
+  
   buttonDiv.id='buttons'
   Object.assign(startButton,{
     innerHTML:'NEW Game',
     id:'startButton'})
 
+  //add player Color Selectors
+  playerDiv.id='playerColors'
+  p1Div.id='p1Div'
+  p2Div.id='p2Div'
 
+  Object.assign(p1Color,{
+    type:'color',
+    defaultValue:'#ff0000',
+    id:'pickColor',
+    name:'p1Color'
+  })
+  Object.assign(p2Color,{
+    type:'color',
+    defaultValue:'#0000ff',
+    id:'pickColor',
+    name:'p2Color'
+  })
+  Object.assign(p1Label,{
+    for:'p1Color',
+    innerHTML: 'Player 1 Color:'
+  })
+  Object.assign(p2Label,{
+    for: 'p2Color',
+    innerHTML: 'Player 2 Color:'
+  })
+
+  //append all these butons and add them to the game display
   buttonDiv.append(startButton)
-  gameDOM.prepend(buttonDiv)
+  p1Div.append(p1Label,p1Color)
+  p2Div.append(p2Label,p2Color)
+  playerDiv.append(p1Div, p2Div)
+  gameDOM.prepend(buttonDiv,playerDiv)
 }
 
-
+//part Three, make Player a CLASS
+/*It should have a constructor that takes a string color name (eg, “orange” or “#ff3366”) and store that on the player instance.
+  The ***Game*** should keep track of the current player *object*, not the current player number.
+  Update the code so that the player pieces are the right color for them, rather than being hardcoded in CSS as red or blue.
+  Add a small form to the HTML that lets you enter the colors for the players, so that when you start a new game, it uses these player colors.
+*/
+class Player{
+  constructor(colorSet='#000000',playerID=1){
+    this.colorSet=colorSet;
+    this.playerID=playerID;
+  }
+}
 
 class Game{
   /** Connect Four
@@ -36,11 +85,13 @@ class Game{
     this.board=board;
     this.makeBoard();
     this.makeHtmlBoard();
+    
+    //setup player colors
+    const allPlayerColors=document.querySelectorAll("#pickColor");
+    this.p1New=new Player(allPlayerColors[0].value,1);
+    this.p2New=new Player(allPlayerColors[1].value,2);
   }
 
-  //add functionality for the buttons
-
-  
   //let currPlayer = 1; // active player: 1 or 2
   //let board = []; // array of rows, each row is array of cells  (board[y][x])
 
@@ -104,6 +155,16 @@ class Game{
     piece.classList.add('piece');
     piece.classList.add(`p${this.currPlayer}`);
     piece.style.top = -50 * (y + 2);
+
+    if(this.currPlayer==1){
+      piece.style.backgroundColor=this.p1New.colorSet
+    }else if(this.currPlayer==2){
+      piece.style.backgroundColor=this.p2New.colorSet
+    }
+    
+    //piece.style.backgroundColor="red"
+    let changeColor=(`p${this.currPlayer}New`).colorSet;
+    piece.style.backgroundColor=changeColor;
 
     const spot = document.getElementById(`${y}-${x}`);
     spot.append(piece);

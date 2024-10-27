@@ -5,12 +5,24 @@
   margin-bottom: 10px;
 }
 
-#resetButton{
-
+/* buttons to pick player color */
+#playerColors{
+  width:fit-content;
+  margin-left: 10px;
+  margin-bottom: 10px;;
+  padding: 10px;
+  border: solid 2px;
+  box-sizing:border-box;
 }
 
-/* game board table */
+#pickColor {
+  margin-inline: 5px;
+  display: inline-block;
+  margin:5px;
+}
 
+
+/* game board table */
 #board td {
   width: 50px;
   height: 50px;
@@ -26,13 +38,13 @@
   border-radius: 50%;
 }
 
-.piece.p1 {
+/*.piece.p1 {
   background-color: red;
 }
 
 .piece.p2 {
   background-color: blue;
-}
+}*/
 
 /* column-top is table row of clickable areas for each column */
 
